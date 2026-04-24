@@ -1,108 +1,102 @@
-# 🚀 Job Application Booster (CrewAI)
+# 🤖 AI Resume Agent Crew
 
-An AI-powered multi-agent system that helps improve resumes, find relevant job opportunities, and generate tailored job applications using **CrewAI**,**ChatGPT** (or **Gemini (via LiteLLM)**), and **Serper Search API**.
+> **A multi-agent AI system that analyzes your resume, hunts for jobs, and crafts tailored applications — fully automated.**
+
+Built with [CrewAI](https://github.com/joaomdmoura/crewAI) and powered by **Google Gemini 2.5 Flash**, this project orchestrates a team of specialized AI agents to supercharge your job search from start to finish.
 
 ---
 
-## 📌 Features
+## ✨ What It Does
 
-* 🔍 **Job Search Automation**
-  Uses Serper API to find relevant job listings based on your resume.
+1. 🔍 **Analyzes** your resume for ATS optimization and improvement areas
+2. 🌐 **Searches** the web for relevant job openings matching your profile
+3. ✍️ **Generates** a tailored resume and cover letter for a target role
 
-* 📄 **Resume Analysis**
-  Analyzes your resume and suggests improvements for ATS optimization.
-
-* ✍️ **Application Generation**
-  Generates a **tailored resume + cover letter** for job applications.
-
-* 🧠 **Multi-Agent Workflow**
-  Uses specialized AI agents:
-
-  * Resume Analyst
-  * Job Researcher
-  * Application Writer
-
-* 💾 **Output Storage**
-  Final result is automatically saved as:
-
-  ```
-  tailored_resume.md
-  ```
+All three steps run sequentially as a coordinated crew — no manual intervention needed.
 
 ---
 
 ## 🏗️ Project Structure
 
 ```
-job_booster/
-│
-├── main.py              # Entry point
-├── agents.py            # Agent definitions
-├── tasks.py             # Task definitions
-├── tools.py             # Serper search tool
-├── config.py            # API keys & LLM config
-├─  fake_resume.txt          # Input resume
-├── tailored_resume.md   # Final output (generated)
-├── .env                 # API keys
-└── requirements.txt
+├── main.py            # Entry point — assembles and runs the crew
+├── agents.py          # Defines the three AI agents and their roles
+├── tasks.py           # Defines the tasks assigned to each agent
+├── tools.py           # Sets up the Serper web search tool
+├── config.py          # API keys and LLM model configuration
+├── requirements.txt   # All Python dependencies
+└── fake_resume.md     # Your resume input (add this file)
 ```
 
 ---
 
-## ⚙️ Setup Instructions
+## 🧠 The Agent Team
 
-### 1. Clone the repository
+| Agent | Role | Responsibility |
+|---|---|---|
+| 📋 **Resume Analyst** | ATS & Resume Expert | Reviews your resume and suggests targeted improvements |
+| 🔎 **Job Researcher** | Market Intelligence | Searches the web for relevant job openings using live data |
+| ✍️ **Application Writer** | Career Copywriter | Crafts a tailored resume and cover letter for the best match |
+
+---
+
+## ⚙️ Tech Stack
+
+| Component | Technology |
+|---|---|
+| Agent Framework | [CrewAI](https://github.com/joaomdmoura/crewAI) `v0.30.11` |
+| LLM | Google Gemini 2.5 Flash (via LiteLLM) |
+| Web Search | [SerperDev](https://serper.dev/) |
+| Language | Python 3.10+ |
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/lakshyasahu111/Reboost.git
-cd Reboost
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
 ```
 
----
-
-### 2. Create virtual environment (recommended)
-
-```bash
-python -m venv .venv
-source .venv/bin/activate   # Linux / Mac
-# OR
-.venv\Scripts\activate      # Windows
-```
-
----
-
-### 3. Install dependencies
+### 2. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
+### 3. Set Up Environment Variables
 
-### 4. Add API keys
-
-Create a `.env` file if not automatically created:
+Create a `.env` file in the project root:
 
 ```env
-GEMINI_API_KEY=your_gemini_api_key
-SERPER_API_KEY=your_serper_api_key
+GEMINI_API_KEY=your_gemini_api_key_here
+SERPER_API_KEY=your_serper_api_key_here
 ```
 
----
+> 🔑 Get your **Gemini API key** at [Google AI Studio](https://aistudio.google.com/)
+> 🔑 Get your **Serper API key** at [serper.dev](https://serper.dev/)
 
-### 5. Add your resume
+### 4. Add Your Resume
 
-Edit:
+Create a `fake_resume.md` file in the project root with your resume content in Markdown format:
 
+```markdown
+# Jane Doe
+jane@example.com | linkedin.com/in/janedoe | github.com/janedoe
+
+## Summary
+...
+
+## Experience
+...
+
+## Skills
+...
 ```
-fake_resume.txt
-```
 
-Replace with your own resume content.
-
----
-
-## 🚀 Run the Project
+### 5. Run the Crew
 
 ```bash
 python main.py
@@ -110,73 +104,90 @@ python main.py
 
 ---
 
-## 📄 Output
+## 📤 Output
 
-After execution, the system will generate:
+After the crew finishes, you'll find:
+
+- **Console output** — Live logs from each agent as they work through their tasks
+- **`tailored_resume.md`** — A freshly generated, job-specific resume and cover letter saved to your project root
+
+---
+
+## 🔧 Configuration
+
+To change the LLM model, update `config.py`:
+
+```python
+LLM_MODEL = "gemini/gemini-2.5-flash"  # Swap with any LiteLLM-supported model
+```
+
+CrewAI supports any model accessible via LiteLLM, including OpenAI, Anthropic, Mistral, and more.
+
+---
+
+## 📋 How It Works
 
 ```
-tailored_resume.md
+Your Resume (fake_resume.md)
+        │
+        ▼
+┌─────────────────────┐
+│   Resume Analyst    │  ── Analyzes & suggests improvements
+└─────────┬───────────┘
+          │
+          ▼
+┌─────────────────────┐
+│   Job Researcher    │  ── Searches for matching jobs online
+└─────────┬───────────┘
+          │
+          ▼
+┌─────────────────────┐
+│ Application Writer  │  ── Writes tailored resume + cover letter
+└─────────┬───────────┘
+          │
+          ▼
+  tailored_resume.md
 ```
 
-This file contains:
-
-* Improved Resume
-* Tailored Cover Letter
+Tasks run **sequentially** — each agent builds on the previous one's output for a coherent, context-aware result.
 
 ---
 
-## 🧠 How It Works
+## 🐛 Troubleshooting
 
-1. **Resume Analyst Agent**
+**`fake_resume.md` not found**
+Make sure you've created the file in the project root before running `main.py`.
 
-   * Reviews resume
-   * Suggests improvements
+**API errors / rate limits**
+Double-check your `.env` file has valid API keys. Gemini Flash has generous free-tier limits but may throttle on heavy use.
 
-2. **Job Researcher Agent**
-
-   * Uses Serper search tool
-   * Finds relevant jobs
-
-3. **Application Writer Agent**
-
-   * Generates optimized resume
-   * Creates tailored cover letter
-
----
-
-## 🔧 Tech Stack
-
-* **CrewAI** – Multi-agent orchestration
-* **Gemini (via LiteLLM)** – LLM backend(Or any other LLM )
-* **Serper API** – Job search
-* **Python** – Core implementation
+**Dependency conflicts**
+It's recommended to use a virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+```
 
 ---
 
-## ⚠️ Notes
+## 🤝 Contributing
 
-* Ensure API keys are valid
-* Do not commit `.env` to GitHub
-* Avoid multiple async tasks in CrewAI (can cause validation errors)
-
----
-
-## 🚀 Future Improvements
-
-* 📄 PDF resume parsing
-* 🌐 Web UI (Streamlit / React)
-* 📊 Job ranking system
-* 🔁 Iterative resume optimization
-* 🧾 Export to PDF/DOCX
+Contributions are welcome! Feel free to open an issue or submit a pull request for:
+- New agent types (e.g., Interview Prep Agent)
+- Additional tools (LinkedIn scraping, job board APIs)
+- Support for more resume formats (PDF, DOCX)
 
 ---
 
-## 👨‍💻 Author
+## 📄 License
 
-Lakshya Sahu
+This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-## 📜 License
+<div align="center">
 
-This project is open-source and available under the MIT License.
+Built with ❤️ using [CrewAI](https://github.com/joaomdmoura/crewAI) · Powered by Google Gemini
+
+</div>
